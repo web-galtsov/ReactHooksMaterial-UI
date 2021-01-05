@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import '../css/App.css';
 import InfoBox from '../components/InfoBox';
 import Map from "./Map";
-
+import Table from './Table';
+import {sortData} from '../util/util';
+import LineGraph from "./LineGraph";
+import "leaflet/dist/leaflet.css";
 import {
     AppHeader,
     AppStats,
     AppLeft
 } from '../StileSide';
-
 
 import {
     MenuItem,
@@ -18,6 +20,7 @@ import {
 } from '@material-ui/core';
 
 
+
 // https://disease.sh/v3/covid-19/countries
 
 function App() {
@@ -25,23 +28,38 @@ function App() {
     const [countries, setCountries] = useState([]);
     const [country, setCountry] = useState('worldwide');
     const [countryInfo, setCountryInfo] = useState({});
+    const [tableData, setTableData] = useState([]);
+
+
+
+
+    useEffect(() => {
+        fetch('https://disease.sh/v3/covid-19/all')
+            .then(response => response.json())
+            .then((data) => {
+                setCountryInfo(data);
+        });
+    }, []);
 
     useEffect(() => {
         const getCountriesData = async () => {
-            await fetch('https://disease.sh/v3/covid-19/countries')
-                .then((response) => response.json())
-                .then((data) => {
+           fetch('https://disease.sh/v3/covid-19/countries')
+             .then((response) => response.json())
+             .then((data) => {
                     // noinspection JSUnresolvedVariable
-                    const countries = data.map((country) => (
-                       {
+                    const countries = data.map((country) => ({
                             name: country.country,
                             value: country.countryInfo.iso2,
                        }));
-                    setCountries(countries);
-                });
-              };
+                    let sortedData = sortData(data);
+                         setCountries(countries);
+                   /*      setMapCountries(data);*/
+                         setTableData(sortedData);
+                     });
+                 };
                 getCountriesData();
             }, []);
+
         const onCountryChange = (event) => {
             const countryCode = event.target.value;
             setCountry(countryCode);
@@ -49,7 +67,7 @@ function App() {
             const url = countryCode === 'worldwide'
                 ? 'https://disease.sh/v3/covid-19/all' :
                 `https://disease.sh/v3/covid-19/countries/${countryCode}`;
-             fetch(url)
+            fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     setCountry(countryCode);
@@ -95,8 +113,10 @@ function App() {
         <Card className='app_right'>
             <CardContent>
                 <h3>Live Cases by Country</h3>
+                <Table countries = {tableData} />
                 {/* table */}
                 <h3>Worldwide new cases</h3>
+                <LineGraph />
                 {/* Graph */}
             </CardContent>
         </Card>
