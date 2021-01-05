@@ -77,7 +77,6 @@ function LineGraph({ casesType = 'cases' }) {
                     setData(chartData);
                 });
         };
-
         fetchData();
     }, [casesType]);
 
@@ -100,5 +99,4 @@ function LineGraph({ casesType = 'cases' }) {
         </div>
     );
 }
-
 export default LineGraph;
