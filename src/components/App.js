@@ -126,10 +126,9 @@ const App = () => {
                                         <Grid item xs={12} sm={4}>
                                             <InfoBox
                                                 className={classes.paperBox}
-                                                onClick={(e) => setCasesType("cases")}
-                                                title="Coronavirus Cases"
-                                                isRed
-                                                active={casesType === "cases"}
+                                                onClick={(e) => setCasesType("recovered")}
+                                                title="Recovered"
+                                                active={casesType === "recovered"}
                                                 cases={prettyPrintStat(countryInfo.todayCases)}
                                                 total={numeral(countryInfo.cases).format("0.0a")}
                                             />
