@@ -5,7 +5,6 @@ import { showDataOnMap } from "../util/util";
 
 function Map({ countries, casesType, center, zoom }) {
     return (
-
         <div className="map">
             <MapContainer center={center} zoom={zoom}>
                 <TileLayer

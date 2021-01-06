@@ -1,16 +1,13 @@
 import React from "react";
 import { CardContent, Typography } from "@material-ui/core";
-//import "../css/InfoBox.css";
 import {CardInfoBox, useStyles,InfoBoxCases} from '../StileSide';
 
 function InfoBox({title, cases, total, active, isRed, ...props }) {
-    console.log(title, active,isRed);
     const classes = useStyles();
-    console.log('Read isRed: ', isRed);
     return (
         <CardInfoBox
             onClick={props.onClick}
-            borderTop={active ? "10px #F48221 solid" : "10px #fff solid"}
+            borderTop={active ? "10px #F48221 solid" : "10px #8378E2 solid"}
             color={active ? "#F48221" : "#5146AF"}
         >
             <CardContent>

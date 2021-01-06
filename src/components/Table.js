@@ -1,20 +1,23 @@
 import React from "react";
-import "../css/Table.css";
 import numeral from "numeral";
+import { List ,ListItem,ListItemText } from "@material-ui/core";
+import { useStyles } from "../StileSide";
 
 function Table({ countries }) {
+    const classes = useStyles();
     return (
-        <div className="table">
+        <List height={400}  itemSize={46} itemCount={200} className={classes.ListTable} >
             {countries.map(({ country, cases }) => (
-                <tr>
-                    <td>{country}</td>
-                    <td>
-                        <strong>{numeral(cases).format("0,0")}</strong>
-                    </td>
-                </tr>
-            ))}
-        </div>
+            <ListItem button style={{paddingTop: '4px',paddingBottom: '4px'}}>
+               <ListItemText>
+                {country}
+               </ListItemText>
+               <ListItemText>
+                 <strong style={{textAlign: 'right',display: 'block'}}>{numeral(cases).format("0,0")}</strong>
+               </ListItemText>
+            </ListItem>
+                 ))}
+        </List>
     );
 }
-
 export default Table;

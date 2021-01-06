@@ -5,15 +5,6 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-   /* overrides: {
-        MuiCssBaseline: {
-            "@global": {
-                body: {
-                    backgroundColor: '#000',
-                }
-            }
-        }
-    },*/
     container: {
         flex: 1,
     },
@@ -44,6 +35,10 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: '700 !important',
         fontSize: '1.15rem !important',
         marginTop: '15px !important'
+    },
+    ListTable: {
+        height: '400px',
+        overflowY: 'scroll'
     }
 }));
 
@@ -69,12 +64,12 @@ export const InfoBoxCases  = styled.h2`
   margin-bottom: 0.5rem;
 `;
 
-
 export const AppHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  padding: 20px 20px 0;
 `;
 
 export const AppHeaderH1 = styled.h1`
@@ -84,4 +79,17 @@ export const AppHeaderH1 = styled.h1`
 
 export const AppStats = styled.div`
   padding: 1rem;
+`;
+export const CardInfoBoxTable = styled.div`
+  box-shadow: 0 2px 1px -1px rgba(131, 120, 226, 0.23), 3px 4px 1px 0 rgba(131, 120, 226, 0.13), 5px 5px 8px 0 rgba(131, 120, 226, 0.12);
+  border-radius: 0;
+  background-color: #fff;
+  margin-top: 112px;
+  border-top: 10px #8378e2 solid;
+`;
+export const AppInformation = styled.h3`
+  color: #8378E2;
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
 `;

@@ -13,14 +13,16 @@ import {
     MenuItem,
     FormControl,
     Select,
-    Card,
     CardContent, Grid, Container, InputLabel, CssBaseline
 } from "@material-ui/core";
 
-import {AppHeader,
-       AppHeaderH1,
-       AppStats,
-       useStyles
+import {
+    AppHeader,
+    AppHeaderH1,
+    AppStats,
+    CardInfoBoxTable,
+    AppInformation,
+    useStyles
 } from '../StileSide';
 
 const themeLight = createMuiTheme({
@@ -30,7 +32,6 @@ const themeLight = createMuiTheme({
         }
     }
 });
-
 
 const App = () => {
     const classes = useStyles();
@@ -86,6 +87,7 @@ const App = () => {
                 setMapZoom(4);
             });
     };
+
     // noinspection JSUnresolvedVariable
     return (
         <MuiThemeProvider theme={themeLight}>
@@ -94,9 +96,9 @@ const App = () => {
                 <Grid item xs={12}  sm={9}>
                    <AppHeader>
                      <AppHeaderH1>COVID-19 Tracker</AppHeaderH1>
-                       <FormControl className={classes.formControl}>
+                       {/*<FormControl className={classes.formControl}>
                            <InputLabel id="worldwide">worldwide</InputLabel>
-                           <Select
+                               <Select
                                   labelId="worldwide"
                                   id="worldwide"
                                   value={country}
@@ -105,6 +107,18 @@ const App = () => {
                                    {countries.map((country) => (
                                         <MenuItem value={country.value} >{country.name}</MenuItem>
                                     ))}
+                               </Select>
+                       </FormControl>*/}
+                       <FormControl className="app__dropdown">
+                           <Select
+                               variant="outlined"
+                               value={country}
+                               onChange={onCountryChange}
+                           >
+                               <MenuItem value="worldwide">Worldwide</MenuItem>
+                               {countries.map((country) => (
+                                   <MenuItem value={country.value}>{country.name}</MenuItem>
+                               ))}
                            </Select>
                        </FormControl>
                    </AppHeader>
@@ -154,21 +168,24 @@ const App = () => {
                           />
                 </Grid>
                 <Grid item xs={12}  sm={3}>
-                    <Card>
+                    <CardInfoBoxTable>
                         <CardContent>
-                            <div className="app__information">
-                                <h3>Live Cases by Country</h3>
+                            <AppInformation>
+                                Live Cases by Country
+                            </AppInformation>
                                 <Table countries={tableData} />
-                                <h3>Worldwide new {casesType}</h3>
+                                <h3 style={{padding: '18px 0 20px 5px', borderTop: '1px #ccc solid', }}>Worldwide new {casesType}</h3>
                                 <LineGraph casesType={casesType} />
-                            </div>
                         </CardContent>
-                    </Card>
+                    </CardInfoBoxTable>
                 </Grid>
             </Grid>
+
+
+
+
          </Container>
         </MuiThemeProvider>
     );
 };
-
 export default App;
