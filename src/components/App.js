@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../css/App.css";
-import {
-    MenuItem,
-    FormControl,
-    Select,
-    Card,
-    CardContent,
-} from "@material-ui/core";
 import InfoBox from "./InfoBox";
 import LineGraph from "./LineGraph";
 import Table from "./Table";
@@ -14,8 +7,33 @@ import { sortData, prettyPrintStat } from "../util/util";
 import numeral from "numeral";
 import Map from "./Map";
 import "leaflet/dist/leaflet.css";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import {
+    MenuItem,
+    FormControl,
+    Select,
+    Card,
+    CardContent, Grid, Container, InputLabel, CssBaseline
+} from "@material-ui/core";
+
+import {AppHeader,
+       AppHeaderH1,
+       AppStats,
+       useStyles
+} from '../StileSide';
+
+const themeLight = createMuiTheme({
+    palette: {
+        background: {
+            default: "#F2F1FC"
+        }
+    }
+});
+
 
 const App = () => {
+    const classes = useStyles();
     const [country, setInputCountry] = useState("worldwide");
     const [countryInfo, setCountryInfo] = useState({});
     const [countries, setCountries] = useState([]);
@@ -38,6 +56,7 @@ const App = () => {
             fetch("https://disease.sh/v3/covid-19/countries")
                 .then((response) => response.json())
                 .then((data) => {
+                    // noinspection JSUnresolvedVariable
                     const countries = data.map((country) => ({
                         name: country.country,
                         value: country.countryInfo.iso2,
@@ -48,15 +67,11 @@ const App = () => {
                     setTableData(sortedData);
                 });
         };
-
         getCountriesData();
     }, []);
 
-    console.log(casesType);
-
     const onCountryChange = async (e) => {
         const countryCode = e.target.value;
-
         const url =
             countryCode === "worldwide"
                 ? "https://disease.sh/v3/covid-19/all"
@@ -66,73 +81,120 @@ const App = () => {
             .then((data) => {
                 setInputCountry(countryCode);
                 setCountryInfo(data);
+                // noinspection JSCheckFunctionSignatures,JSUnresolvedVariable
                 setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
                 setMapZoom(4);
             });
     };
-
+    // noinspection JSUnresolvedVariable
     return (
-        <div className="app">
-            <div className="app__left">
-                <div className="app__header">
-                    <h1>COVID-19 Tracker</h1>
-                    <FormControl className="app__dropdown">
-                        <Select
-                            variant="outlined"
-                            value={country}
-                            onChange={onCountryChange}
+        <MuiThemeProvider theme={themeLight}>
+         <Container maxWidth = 'xl'>
+            <Grid container spacing={3}>
+                <Grid item xs={12}  sm={9}>
+                   <AppHeader>
+                     <AppHeaderH1>COVID-19 Tracker</AppHeaderH1>
+                       <FormControl className={classes.formControl}>
+                           <InputLabel id="worldwide">worldwide</InputLabel>
+                           <Select
+                                  labelId="worldwide"
+                                  id="worldwide"
+                                  value={country}
+                                  onChange={onCountryChange}
+                                    >
+                                   {countries.map((country) => (
+                                        <MenuItem value={country.value} >{country.name}</MenuItem>
+                                    ))}
+                           </Select>
+                       </FormControl>
+                   </AppHeader>
+                            <AppStats>
+                              <CssBaseline />
+                                <Grid container spacing={3}>
+                                        <Grid item xs={12}  sm={4}>
+                                           {/* <Paper className={classes.paper}>xs=12 sm=6</Paper>*/}
+                                            <InfoBox
+                                                className={classes.paperBox}
+                                                onClick={(e) => setCasesType("cases")}
+                                                title="Coronavirus Cases"
+                                                isRed
+                                                active={casesType === "cases"}
+                                                cases={prettyPrintStat(countryInfo.todayCases)}
+                                                total={numeral(countryInfo.cases).format("0.0a")}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={4}>
+                                            <InfoBox
+                                                className={classes.paperBox}
+                                                onClick={(e) => setCasesType("cases")}
+                                                title="Coronavirus Cases"
+                                                isRed
+                                                active={casesType === "cases"}
+                                                cases={prettyPrintStat(countryInfo.todayCases)}
+                                                total={numeral(countryInfo.cases).format("0.0a")}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={4}>
+                                            <InfoBox
+                                                elevation={0}
+                                                className={classes.paperBox}
+                                                onClick={(e) => setCasesType("deaths")}
+                                                title="Deaths"
+                                                isRed
+                                                active={casesType === "deaths"}
+                                                cases={prettyPrintStat(countryInfo.todayDeaths)}
+                                                total={numeral(countryInfo.deaths).format("0.0a")}
+                                            />
+                                        </Grid>
+                                </Grid>
 
-                        >
-                            <MenuItem value="worldwide" >Worldwide</MenuItem>
-                            {countries.map((country) => (
-                                <MenuItem value={country.value} >{country.name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </div>
-                <div className="app__stats">
-                    <InfoBox
-                        onClick={(e) => setCasesType("cases")}
-                        title="Coronavirus Cases"
-                        isRed
-                        active={casesType === "cases"}
-                        cases={prettyPrintStat(countryInfo.todayCases)}
-                        total={numeral(countryInfo.cases).format("0.0a")}
-                    />
-                    <InfoBox
-                        onClick={(e) => setCasesType("recovered")}
-                        title="Recovered"
-                        active={casesType === "recovered"}
-                        cases={prettyPrintStat(countryInfo.todayRecovered)}
-                        total={numeral(countryInfo.recovered).format("0.0a")}
-                    />
-                    <InfoBox
-                        onClick={(e) => setCasesType("deaths")}
-                        title="Deaths"
-                        isRed
-                        active={casesType === "deaths"}
-                        cases={prettyPrintStat(countryInfo.todayDeaths)}
-                        total={numeral(countryInfo.deaths).format("0.0a")}
-                    />
-                </div>
-                <Map
-                    countries={mapCountries}
-                    casesType={casesType}
-                    center={mapCenter}
-                    zoom={mapZoom}
-                />
-            </div>
-            <Card className="app__right">
-                <CardContent>
-                    <div className="app__information">
-                        <h3>Live Cases by Country</h3>
-                        <Table countries={tableData} />
-                        <h3>Worldwide new {casesType}</h3>
-                        <LineGraph casesType={casesType} />
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
+
+                                {/*<InfoBox
+                                    onClick={(e) => setCasesType("cases")}
+                                    title="Coronavirus Cases"
+                                    isRed
+                                    active={casesType === "cases"}
+                                    cases={prettyPrintStat(countryInfo.todayCases)}
+                                    total={numeral(countryInfo.cases).format("0.0a")}
+                                />
+                                <InfoBox
+                                    onClick={(e) => setCasesType("recovered")}
+                                    title="Recovered"
+                                    active={casesType === "recovered"}
+                                    cases={prettyPrintStat(countryInfo.todayRecovered)}
+                                    total={numeral(countryInfo.recovered).format("0.0a")}
+                                />
+                                <InfoBox
+                                    onClick={(e) => setCasesType("deaths")}
+                                    title="Deaths"
+                                    isRed
+                                    active={casesType === "deaths"}
+                                    cases={prettyPrintStat(countryInfo.todayDeaths)}
+                                    total={numeral(countryInfo.deaths).format("0.0a")}
+                                />*/}
+                   </AppStats>
+                            <Map
+                                countries={mapCountries}
+                                casesType={casesType}
+                                center={mapCenter}
+                                zoom={mapZoom}
+                            />
+                </Grid>
+                <Grid item xs={12}  sm={3}>
+                    <Card>
+                        <CardContent>
+                            <div className="app__information">
+                                <h3>Live Cases by Country</h3>
+                                <Table countries={tableData} />
+                                <h3>Worldwide new {casesType}</h3>
+                                <LineGraph casesType={casesType} />
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+         </Container>
+        </MuiThemeProvider>
     );
 };
 
