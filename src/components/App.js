@@ -108,76 +108,50 @@ const App = () => {
                            </Select>
                        </FormControl>
                    </AppHeader>
-                            <AppStats>
+                          <AppStats>
                               <CssBaseline />
                                 <Grid container spacing={3}>
-                                        <Grid item xs={12}  sm={4}>
-                                           {/* <Paper className={classes.paper}>xs=12 sm=6</Paper>*/}
-                                            <InfoBox
-                                                className={classes.paperBox}
-                                                onClick={(e) => setCasesType("cases")}
-                                                title="Coronavirus Cases"
-                                                isRed
-                                                active={casesType === "cases"}
-                                                cases={prettyPrintStat(countryInfo.todayCases)}
-                                                total={numeral(countryInfo.cases).format("0.0a")}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} sm={4}>
-                                            <InfoBox
-                                                className={classes.paperBox}
-                                                onClick={(e) => setCasesType("recovered")}
-                                                title="Recovered"
-                                                active={casesType === "recovered"}
-                                                cases={prettyPrintStat(countryInfo.todayCases)}
-                                                total={numeral(countryInfo.cases).format("0.0a")}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} sm={4}>
-                                            <InfoBox
-                                                elevation={0}
-                                                className={classes.paperBox}
-                                                onClick={(e) => setCasesType("deaths")}
-                                                title="Deaths"
-                                                isRed
-                                                active={casesType === "deaths"}
-                                                cases={prettyPrintStat(countryInfo.todayDeaths)}
-                                                total={numeral(countryInfo.deaths).format("0.0a")}
-                                            />
-                                        </Grid>
+                                    <Grid item xs={12}  sm={4}>
+                                        <InfoBox
+                                           className={classes.paperBox}
+                                           onClick={(e) => setCasesType("cases")}
+                                           title="Coronavirus Cases"
+                                           isRed
+                                           active={casesType === "cases"}
+                                           cases={prettyPrintStat(countryInfo.todayCases)}
+                                           total={numeral(countryInfo.cases).format("0.0a")}
+                                         />
+                                     </Grid>
+                                     <Grid item xs={12} sm={4}>
+                                        <InfoBox
+                                            className={classes.paperBox}
+                                            onClick={(e) => setCasesType("recovered")}
+                                            title="Recovered"
+                                            active={casesType === "recovered"}
+                                            cases={prettyPrintStat(countryInfo.todayCases)}
+                                            total={numeral(countryInfo.cases).format("0.0a")}
+                                        />
+                                     </Grid>
+                                     <Grid item xs={12} sm={4}>
+                                        <InfoBox
+                                             elevation={0}
+                                             className={classes.paperBox}
+                                             onClick={(e) => setCasesType("deaths")}
+                                             title="Deaths"
+                                             isRed
+                                             active={casesType === "deaths"}
+                                             cases={prettyPrintStat(countryInfo.todayDeaths)}
+                                             total={numeral(countryInfo.deaths).format("0.0a")}
+                                        />
+                                     </Grid>
                                 </Grid>
-
-
-                                {/*<InfoBox
-                                    onClick={(e) => setCasesType("cases")}
-                                    title="Coronavirus Cases"
-                                    isRed
-                                    active={casesType === "cases"}
-                                    cases={prettyPrintStat(countryInfo.todayCases)}
-                                    total={numeral(countryInfo.cases).format("0.0a")}
-                                />
-                                <InfoBox
-                                    onClick={(e) => setCasesType("recovered")}
-                                    title="Recovered"
-                                    active={casesType === "recovered"}
-                                    cases={prettyPrintStat(countryInfo.todayRecovered)}
-                                    total={numeral(countryInfo.recovered).format("0.0a")}
-                                />
-                                <InfoBox
-                                    onClick={(e) => setCasesType("deaths")}
-                                    title="Deaths"
-                                    isRed
-                                    active={casesType === "deaths"}
-                                    cases={prettyPrintStat(countryInfo.todayDeaths)}
-                                    total={numeral(countryInfo.deaths).format("0.0a")}
-                                />*/}
-                   </AppStats>
-                            <Map
+                          </AppStats>
+                          <Map
                                 countries={mapCountries}
                                 casesType={casesType}
                                 center={mapCenter}
                                 zoom={mapZoom}
-                            />
+                          />
                 </Grid>
                 <Grid item xs={12}  sm={3}>
                     <Card>

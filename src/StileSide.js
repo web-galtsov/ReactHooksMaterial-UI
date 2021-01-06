@@ -45,7 +45,6 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '1.15rem !important',
         marginTop: '15px !important'
     }
-
 }));
 
 
@@ -59,10 +58,10 @@ export const CardInfoBox = styled.div`
   color: ${(props) => props.color};
  &:hover {
    border-top: 10px solid #F48221 ;
-//   color: #F48221 !important
  }
 `;
 
+// noinspection JSUnresolvedVariable
 export const InfoBoxCases  = styled.h2`
   color:${(props) => props.color};
   font-weight: 600;
@@ -77,10 +76,12 @@ export const AppHeader = styled.div`
   align-items: center;
   margin-bottom: 20px;
 `;
+
 export const AppHeaderH1 = styled.h1`
   color: #8378E2;
   font-size: 2rem;
 `;
+
 export const AppStats = styled.div`
   padding: 1rem;
 `;

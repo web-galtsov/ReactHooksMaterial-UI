@@ -4,9 +4,9 @@ import { Circle, Popup } from "react-leaflet";
 
 const casesTypeColors = {
     cases: {
-        hex: "#CC1034",
-        rgb: "rgb(204, 16, 52)",
-        half_op: "rgba(204, 16, 52, 0.5)",
+        hex: "#8378E2",
+        rgb: "rgb(158,150,233)",
+        half_op: "rgba(158,150,233, 0.5)",
         multiplier: 800,
     },
     recovered: {
@@ -16,9 +16,9 @@ const casesTypeColors = {
         multiplier: 1200,
     },
     deaths: {
-        hex: "#fb4443",
-        rgb: "rgb(251, 68, 67)",
-        half_op: "rgba(251, 68, 67, 0.5)",
+        hex: "#F48221",
+        rgb: "rgb(249,185,132)",
+        half_op: "rgba(228,109,12, 0.5)",
         multiplier: 2000,
     },
 };
@@ -38,6 +38,7 @@ export const sortData = (data) => {
 export const prettyPrintStat = (stat) =>
     stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
+// noinspection JSUnresolvedVariable
 export const showDataOnMap = (data, casesType = "cases") =>
     data.map((country) => (
         <Circle
@@ -54,7 +55,7 @@ export const showDataOnMap = (data, casesType = "cases") =>
                     <div
                         className="info-flag"
                         style={{ backgroundImage: `url(${country.countryInfo.flag})` }}
-                    ></div>
+                    />
                     <div className="info-name">{country.country}</div>
                     <div className="info-confirmed">
                         Cases: {numeral(country.cases).format("0,0")}
