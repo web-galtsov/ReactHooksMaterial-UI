@@ -39,6 +39,22 @@ export const useStyles = makeStyles((theme) => ({
     ListTable: {
         height: '400px',
         overflowY: 'scroll'
+    },
+    mainContent: {
+        backgroundPosition: 'top center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        paddingTop: '40px',
+        paddingBottom: '40px',
+        position: 'relative',
+        marginTop: '30px',
+        backgroundColor: '#7169b9',
+        textAlign: 'center'
+    },
+    footerButton: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        letterSpacing: '0em',
+        textTransform: 'capitalize'
     }
 }));
 

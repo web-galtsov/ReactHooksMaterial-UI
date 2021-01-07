@@ -3,6 +3,7 @@ import "../css/App.css";
 import InfoBox from "./InfoBox";
 import LineGraph from "./LineGraph";
 import Table from "./Table";
+import Footer from "./Footer";
 import { sortData, prettyPrintStat } from "../util/util";
 import numeral from "numeral";
 import Map from "./Map";
@@ -249,6 +250,7 @@ const App = () => {
                      </Grid>
                 </Grid>
          </Container>
+        <Footer/>
         </MuiThemeProvider>
     );
 };
