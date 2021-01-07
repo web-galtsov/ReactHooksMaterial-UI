@@ -13,7 +13,7 @@ import {
     MenuItem,
     FormControl,
     Select,
-    CardContent, Grid, Container, InputLabel, CssBaseline
+    CardContent, Grid, Container, CssBaseline, Typography
 } from "@material-ui/core";
 
 import {
@@ -21,9 +21,9 @@ import {
     AppHeaderH1,
     AppStats,
     CardInfoBoxTable,
-    AppInformation,
-    useStyles
+    AppInformation
 } from '../StileSide';
+import TableIsrael from "./TableIsrael";
 
 const themeLight = createMuiTheme({
     palette: {
@@ -34,15 +34,19 @@ const themeLight = createMuiTheme({
 });
 
 const App = () => {
-    const classes = useStyles();
     const [country, setInputCountry] = useState("worldwide");
     const [countryInfo, setCountryInfo] = useState({});
     const [countries, setCountries] = useState([]);
     const [mapCountries, setMapCountries] = useState([]);
     const [tableData, setTableData] = useState([]);
+
+    const [tableDataIsr, setTableDataIsr] = useState([]);
+
     const [casesType, setCasesType] = useState("cases");
     const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
     const [mapZoom, setMapZoom] = useState(3);
+
+
 
     useEffect(() => {
         fetch("https://disease.sh/v3/covid-19/all")
@@ -71,6 +75,27 @@ const App = () => {
         getCountriesData();
     }, []);
 
+    useEffect(() => {
+        const getCountriesDataIsr = async () => {
+            fetch("https://disease.sh/v3/covid-19/countries")
+                .then((response) => response.json())
+                .then((data) => {
+                    // noinspection JSUnresolvedVariable
+                    const countries = data.map((country) => ({
+                        name: country.country,
+                        value: country.countryInfo.iso2,
+                    }));
+                    let sortedData = sortData(data);
+                    setCountries(countries);
+                    setMapCountries(data);
+                    setTableDataIsr(sortedData);
+                });
+        };
+        getCountriesDataIsr();
+    }, []);
+
+
+
     const onCountryChange = async (e) => {
         const countryCode = e.target.value;
         const url =
@@ -83,10 +108,14 @@ const App = () => {
                 setInputCountry(countryCode);
                 setCountryInfo(data);
                 // noinspection JSCheckFunctionSignatures,JSUnresolvedVariable
-                setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-                setMapZoom(4);
+                countryCode === "worldwide"
+                    ? setMapCenter([34.80746, -40.4796])
+                    : setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+                 setMapZoom(4);
             });
+        console.log(countryInfo);
     };
+
 
     // noinspection JSUnresolvedVariable
     return (
@@ -96,19 +125,6 @@ const App = () => {
                 <Grid item xs={12}  sm={9}>
                    <AppHeader>
                      <AppHeaderH1>COVID-19 Tracker</AppHeaderH1>
-                       {/*<FormControl className={classes.formControl}>
-                           <InputLabel id="worldwide">worldwide</InputLabel>
-                               <Select
-                                  labelId="worldwide"
-                                  id="worldwide"
-                                  value={country}
-                                  onChange={onCountryChange}
-                                    >
-                                   {countries.map((country) => (
-                                        <MenuItem value={country.value} >{country.name}</MenuItem>
-                                    ))}
-                               </Select>
-                       </FormControl>*/}
                        <FormControl className="app__dropdown">
                            <Select
                                variant="outlined"
@@ -127,30 +143,27 @@ const App = () => {
                                 <Grid container spacing={3}>
                                     <Grid item xs={12}  sm={4}>
                                         <InfoBox
-                                           className={classes.paperBox}
-                                           onClick={(e) => setCasesType("cases")}
-                                           title="Coronavirus Cases"
                                            isRed
                                            active={casesType === "cases"}
-                                           cases={prettyPrintStat(countryInfo.todayCases)}
+                                           onClick={() => setCasesType("cases")}
+                                           title="Coronavirus Cases"
                                            total={numeral(countryInfo.cases).format("0.0a")}
+                                           cases={prettyPrintStat(countryInfo.todayCases)}
                                          />
                                      </Grid>
                                      <Grid item xs={12} sm={4}>
                                         <InfoBox
-                                            className={classes.paperBox}
-                                            onClick={(e) => setCasesType("recovered")}
+                                            onClick={() => setCasesType("recovered")}
                                             title="Recovered"
                                             active={casesType === "recovered"}
-                                            cases={prettyPrintStat(countryInfo.todayCases)}
-                                            total={numeral(countryInfo.cases).format("0.0a")}
+                                            cases={prettyPrintStat(countryInfo.todayRecovered)}
+                                            total={numeral(countryInfo.recovered).format("0.0a")}
                                         />
                                      </Grid>
                                      <Grid item xs={12} sm={4}>
                                         <InfoBox
                                              elevation={0}
-                                             className={classes.paperBox}
-                                             onClick={(e) => setCasesType("deaths")}
+                                             onClick={() => setCasesType("deaths")}
                                              title="Deaths"
                                              isRed
                                              active={casesType === "deaths"}
@@ -180,10 +193,61 @@ const App = () => {
                     </CardInfoBoxTable>
                 </Grid>
             </Grid>
-
-
-
-
+            <CssBaseline />
+                 <Grid container spacing={3}>
+                     <Grid item xs={12}  sm={4}>
+                         <CardInfoBoxTable>
+                             <CardContent>
+                                 <AppInformation>
+                                     Live Cases by Country
+                                 </AppInformation>
+                                 <TableIsrael countries={tableDataIsr} />
+                             </CardContent>
+                         </CardInfoBoxTable>
+                     </Grid>
+                     <Grid item xs={12}  sm={4}>
+                         <CardInfoBoxTable>
+                             <CardContent>
+                                 <AppInformation>
+                                     Live Cases by Country
+                                 </AppInformation>
+                                 <TableIsrael countries={tableDataIsr} />
+                             </CardContent>
+                         </CardInfoBoxTable>
+                     </Grid>
+                     <Grid item xs={12}  sm={4}>
+                       <CssBaseline/>
+                         <CardInfoBoxTable>
+                             <CardContent>
+                                <Typography gutterBottom >
+                                    Symptoms
+                                </Typography>
+                                    <p>Most Common Cases</p>
+                                    <ul>
+                                        <li>Fever</li>
+                                        <li>Dry cough</li>
+                                        <li>Tiredness</li>
+                                    </ul>
+                                <p>Less Common Cases</p>
+                                <ul>
+                                    <li>Aches and pains</li>
+                                    <li>Sore throat</li>
+                                    <li>Diarrhoea</li>
+                                    <li>Conjunctivitis</li>
+                                    <li>Headache</li>
+                                    <li>Loss of taste or smell</li>
+                                    <li>A rash on skin, or discolouration of fingers or toes</li>
+                                </ul>
+                                <p>Serious Common Cases</p>
+                                <ul>
+                                    <li>Difficulty breathing or shortness of breath</li>
+                                    <li>Chest pain or pressure</li>
+                                    <li>Loss of speech or movement</li>
+                                </ul>
+                              </CardContent>
+                          </CardInfoBoxTable>
+                     </Grid>
+                </Grid>
          </Container>
         </MuiThemeProvider>
     );

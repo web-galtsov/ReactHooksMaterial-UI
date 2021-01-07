@@ -16,11 +16,11 @@ export const useStyles = makeStyles((theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
-    paperBox: {
+ /*   paperBox: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-    },
+    },*/
     infoBoxRed: {
         borderColor: '#9990FF',
     },
@@ -72,7 +72,7 @@ export const AppHeader = styled.div`
   padding: 20px 20px 0;
 `;
 
-export const AppHeaderH1 = styled.h1`
+export const AppHeaderH1 = styled.div`
   color: #8378E2;
   font-size: 2rem;
 `;
@@ -87,7 +87,7 @@ export const CardInfoBoxTable = styled.div`
   margin-top: 112px;
   border-top: 10px #8378e2 solid;
 `;
-export const AppInformation = styled.h3`
+export const AppInformation = styled.div`
   color: #8378E2;
   font-weight: 600;
   font-size: 1.25rem;

@@ -38,12 +38,14 @@ export const sortData = (data) => {
 export const prettyPrintStat = (stat) =>
     stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 // noinspection JSUnresolvedVariable
-export const showDataOnMap = (data, casesType = "cases") =>
+export const showDataOnMap = (data, casesType) =>
     data.map((country) => (
         <Circle
             center={[country.countryInfo.lat, country.countryInfo.long]}
-            color={casesTypeColors[casesType].hex}
-            fillColor={casesTypeColors[casesType].hex}
+            pathOptions={{
+                color: casesTypeColors[casesType].hex,
+                fillColor: casesTypeColors[casesType].hex,
+            }}
             fillOpacity={0.4}
             radius={
                 Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
