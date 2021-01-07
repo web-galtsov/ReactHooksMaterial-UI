@@ -10,14 +10,12 @@ import Map from "./Map";
 import Bg_symptoms from "../image/Bg_simp.png";
 import "leaflet/dist/leaflet.css";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-
 import {
     MenuItem,
     FormControl,
     Select,
-    CardContent, Grid, Container, CssBaseline, Typography
+    CardContent, Grid, Container, CssBaseline
 } from "@material-ui/core";
-
 import {
     AppHeader,
     AppHeaderH1,
@@ -43,11 +41,9 @@ const App = () => {
     const [countries, setCountries] = useState([]);
     const [mapCountries, setMapCountries] = useState([]);
     const [tableData, setTableData] = useState([]);
-
     const [casesType, setCasesType] = useState("cases");
     const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
     const [mapZoom, setMapZoom] = useState(3);
-
 
     useEffect(() => {
         fetch("https://disease.sh/v3/covid-19/all")
@@ -67,7 +63,7 @@ const App = () => {
                         name: country.country,
                         value: country.countryInfo.iso2,
                     }));
-                    let sortedData = sortData(data);
+                    const sortedData = sortData(data);
                     setCountries(countries);
                     setMapCountries(data);
                     setTableData(sortedData);
@@ -96,7 +92,6 @@ const App = () => {
         console.log(countryInfo);
     };
 
-    // noinspection JSUnresolvedVariable
     return (
         <MuiThemeProvider theme={themeLight}>
          <Container maxWidth = 'xl'>
@@ -112,7 +107,7 @@ const App = () => {
                            >
                                <MenuItem value="worldwide">Worldwide</MenuItem>
                                {countries.map((country) => (
-                                   <MenuItem value={country.value}>{country.name}</MenuItem>
+                                   <MenuItem value={country.value} key={country}>{country.name}</MenuItem>
                                ))}
                            </Select>
                        </FormControl>
@@ -141,7 +136,6 @@ const App = () => {
                                      </Grid>
                                      <Grid item xs={12} sm={4}>
                                         <InfoBox
-                                             elevation={0}
                                              onClick={() => setCasesType("deaths")}
                                              title="Deaths"
                                              isRed
@@ -167,7 +161,7 @@ const App = () => {
                             </AppInformation>
                                 <Table countries={tableData} />
                                 <h3 style={{padding: '18px 0 20px 5px', borderTop: '1px #ccc solid', }}>Worldwide new {casesType}</h3>
-                                <LineGraph casesType={casesType} />
+                               <LineGraph casesType={casesType} />
                         </CardContent>
                     </CardInfoBoxTable>
                 </Grid>

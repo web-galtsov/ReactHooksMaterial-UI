@@ -6,9 +6,9 @@ import { useStyles } from "../StileSide";
 function Table({ countries }) {
     const classes = useStyles();
     return (
-        <List height={400}  itemSize={46} itemCount={200} className={classes.ListTable} >
+        <List height={400} className={classes.ListTable} >
             {countries.map(({ country, cases }) => (
-            <ListItem button style={{paddingTop: '4px',paddingBottom: '4px'}} divider>
+            <ListItem button style={{paddingTop: '4px',paddingBottom: '4px'}} divider key={country}>
                <ListItemText>
                 {country}
                </ListItemText>

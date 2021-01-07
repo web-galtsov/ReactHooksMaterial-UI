@@ -1,24 +1,3 @@
-/*
-import React from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
-import "../css/Map.css";
-import { showDataOnMap } from "../util/util";
-
-function Map({ countries, casesType, center, zoom }) {
-    return (
-        <div className="map">
-            <MapContainer center={center} zoom={zoom}>
-                <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                />
-                {showDataOnMap(countries, casesType)}
-            </MapContainer>
-        </div>
-    );
-}
-export default Map;*/
-
 import React from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "../css/Map.css";
@@ -31,7 +10,7 @@ function Map({ countries, casesType, center, zoom }) {
         return null;
     }
     return (
-            <MapContainer
+           <MapContainer
                 casesType={casesType}
                 className="map"
                 center={center}
@@ -44,8 +23,7 @@ function Map({ countries, casesType, center, zoom }) {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {showDataOnMap(countries, casesType)}
-            </MapContainer>
-
-    );
-}
+           </MapContainer>
+        );
+    }
 export default Map;
