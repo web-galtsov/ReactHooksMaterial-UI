@@ -55,6 +55,15 @@ export const useStyles = makeStyles((theme) => ({
         color: 'rgba(255, 255, 255, 0.7)',
         letterSpacing: '0em',
         textTransform: 'capitalize'
+    },
+    ImgSymptoms: {
+        width: '100%',
+        height: '100%',
+        margin: '32px auto 20px',
+        justifyContent: 'center'
+    },
+    ListUl: {
+        padding: '10px 30px'
     }
 }));
 
@@ -108,4 +117,9 @@ export const AppInformation = styled.div`
   font-weight: 600;
   font-size: 1.25rem;
   margin-bottom: 1rem;
+`;
+export const CardInfoBoxBg = styled.div`
+  padding: 40px;
+  flex-shrink: 0;
+  margin-top: 15px;
 `;
