@@ -1,0 +1,55 @@
+﻿
+	https://www.youtube.com/watch?v=cF3pIMJUZxM
+	
+	https://www.chartjs.org/docs/latest/
+
+	https://www.chartjs.org/docs/latest/
+
+	https://www.chartjs.org/docs/latest/charts/line.html
+
+	https://codesandbox.io/s/intelligent-snowflake-6y71c?fontsize=14&hidenavigation=1&theme=dark&file=/src/index.js:143-159  --- theme body background
+
+	https://codesandbox.io/s/4q56r5ol89?file=/demo.js ----  Material demo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	npx create-react-app <new name ford>
+
+	npm install -g npx
+
+	npm install @material-ui/core
+
+	npm install @material-ui/icons
+
+	npm install @material-ui/styles
+
+	npm install --save styled-components
+
+	npm install eslint-plugin-react-hooks --save-dev
+
+	npm install --save react-chartjs-2 chart.js
+
+	npm i numeral
+
+	npm install leaflet
+
+	npm i react-leaflet
+
+
+          
